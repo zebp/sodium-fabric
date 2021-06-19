@@ -1,4 +1,5 @@
 plugins {
+    id 'maven'
     id 'fabric-loom' version '0.8-SNAPSHOT'
     id 'org.ajoberstar.grgit' version '4.1.0'
 }
