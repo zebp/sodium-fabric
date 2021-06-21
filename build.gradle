@@ -85,3 +85,12 @@ def getVersionMetadata() {
     // No tracking information could be found about the build
     return "unknown"
 }
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from(components["java"])
+            artifact sourcesJar
+        }
+    }
+}
