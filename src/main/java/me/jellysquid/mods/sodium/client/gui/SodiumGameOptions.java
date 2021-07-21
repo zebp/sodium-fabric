@@ -6,11 +6,12 @@ import com.google.gson.GsonBuilder;
 import me.jellysquid.mods.sodium.client.SodiumClientMod;
 import me.jellysquid.mods.sodium.client.gui.options.TextProvider;
 import net.minecraft.client.option.GraphicsMode;
+import net.minecraft.text.Text;
+import net.minecraft.text.TranslatableText;
 
 import java.io.FileReader;
 import java.io.IOException;
 import java.lang.reflect.Modifier;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
@@ -21,10 +22,6 @@ public class SodiumGameOptions {
 
     private Path configPath;
 
-    public void notifyListeners() {
-        SodiumClientMod.onConfigChanged(this);
-    }
-
     public static class AdvancedSettings {
         public boolean animateOnlyVisibleTextures = true;
         public boolean useEntityCulling = true;
@@ -32,6 +29,7 @@ public class SodiumGameOptions {
         public boolean useFogOcclusion = true;
         public boolean useBlockFaceCulling = true;
         public boolean allowDirectMemoryAccess = true;
+        public boolean enableMemoryTracing = false;
     }
 
     public static class QualitySettings {
@@ -47,18 +45,18 @@ public class SodiumGameOptions {
     }
 
     public enum GraphicsQuality implements TextProvider {
-        DEFAULT("Default"),
-        FANCY("Fancy"),
-        FAST("Fast");
+        DEFAULT("generator.default"),
+        FANCY("options.clouds.fancy"),
+        FAST("options.clouds.fast");
 
-        private final String name;
+        private final Text name;
 
         GraphicsQuality(String name) {
-            this.name = name;
+            this.name = new TranslatableText(name);
         }
 
         @Override
-        public String getLocalizedName() {
+        public Text getLocalizedName() {
             return this.name;
         }
 
@@ -106,7 +104,6 @@ public class SodiumGameOptions {
             throw new IOException("Not a directory: " + dir);
         }
 
-        Files.write(this.configPath, GSON.toJson(this)
-                .getBytes(StandardCharsets.UTF_8));
+        Files.writeString(this.configPath, GSON.toJson(this));
     }
 }

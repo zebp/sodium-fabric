@@ -6,8 +6,8 @@ plugins {
 
 group = 'com.github.zebp'
 
-sourceCompatibility = "1.8"
-targetCompatibility = "1.8"
+sourceCompatibility = "16"
+targetCompatibility = "16"
 
 archivesBaseName = "${project.archives_base_name}-mc${project.minecraft_version}"
 version = "${project.mod_version}+${getVersionMetadata()}"
@@ -35,6 +35,7 @@ dependencies {
     modIncludeImplementation(fabricApi.module("fabric-api-base", project.fabric_version))
     modIncludeImplementation(fabricApi.module("fabric-rendering-fluids-v1", project.fabric_version))
     modIncludeImplementation(fabricApi.module("fabric-rendering-data-attachment-v1", project.fabric_version))
+    modIncludeImplementation(fabricApi.module("fabric-resource-loader-v0", project.fabric_version))
 }
 
 if (project.use_third_party_mods) {
